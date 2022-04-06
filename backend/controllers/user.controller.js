@@ -83,4 +83,48 @@ module.exports = class UserController {
             console.log(error)
         }
     }
+
+    // ============ SEARCH USER BY ID ============
+    static async getUserById(req, res) {
+        const id = req.params.id
+        let wantedUser = await user.findByPk(id)
+        wantedUser.password = undefined
+
+        if(!wantedUser){
+            res.status(422).json({
+                message: 'Usuário não encontrado!',
+            })
+            return
+        }
+        res.status(200).json({ wantedUser });
+    }
+
+
+
+    // ============ EDIT USER BY ID ============
+    static async editUser(req, res){
+        const id = req.params.id
+        
+        let { name, cpf, email, password, confirmpassword, birthDate, phone} = req.body
+        let image = ''
+
+        //await userHelpers.payloadValidator(res, email)
+        await userHelpers.userEditValidator(res, name, cpf, email, password, confirmpassword )
+
+        
+
+
+       
+        const user = await user.findByPk(id)
+
+        if (!user){
+            res.status(422).json({
+                message: 'Usuário não encontrado!'
+            })
+        }
+        return
+    }
+
+
+
 }

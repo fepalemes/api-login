@@ -60,8 +60,41 @@ async function userLoginValidator(res, email, password){
 
 
 
+async function userEditValidator(res, name, cpf, email, password, confirmpassword){
+    try{
+        if(!name){
+            return res.status(422).json({ message: 'O nome é obrigatório'})
+        }
+        if(!cpf){
+            return res.status(422).json({ message: 'O cpf é obrigatório'})
+        }
+        if(!email){
+            return res.status(422).json({ message: 'O email é obrigatório'})
+        }
+
+        const userExists = await user.findOne({email: email})
+        if (user.email )
+
+        if(!password){
+            return res.status(422).json({ message: 'A senha é obrigatória'})
+        }
+        if(!confirmpassword){
+            return res.status(422).json({ message: 'A confirmação de senha é obrigatória'})
+        }
+        if(password !== confirmpassword){
+            return res.status(422).json({ message: 'A senha e a confirmação de senha precisam ser iguais!'})
+        }
+
+
+    } catch(error){
+        console.log(error);
+    }
+}
+
+
 module.exports = {
     userRegisterValidator,
     payloadValidator,
-    userLoginValidator  
+    userLoginValidator,
+    userEditValidator 
 }

@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize')
 
 const sequelize = new Sequelize('api_login', 'root', '',{
-    host: 'localhost',
+    host: 'localhost', //'192.168.15.200',
     dialect: 'mysql'
 })
 

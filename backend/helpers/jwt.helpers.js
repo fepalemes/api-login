@@ -22,7 +22,35 @@ const getToken = (req) => {
         
 }
 
+
+
+const checkToken = (req, res, next) => {
+    
+    if(!req.headers.authorization){
+        return res.status(401).json({ message: 'Acesso negado! Você precisa estar logado para realizar alterações no usuário!'})
+    }
+
+    const token = getToken(req)
+
+    if(!token){
+        return res.status(401).json({ message: 'Acesso negado! Você precisa estar logado para realizar alterações no usuário!'})
+    }
+
+    try{
+        const verified = jwt.verify(token, tokenSecret)
+        req.user = verified
+        next()
+
+    }catch(error){
+        return res.status(401).json({ message: 'Acesso negado! Token inválido!'})
+    }
+
+}
+
+
+
 module.exports = {
     createUserToken,
-    getToken
+    getToken,
+    checkToken
 }

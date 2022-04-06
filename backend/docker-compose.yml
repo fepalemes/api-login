@@ -5,6 +5,6 @@ services: ## define um serviço
       build: . ## localização do dockerfile
       command: npm start ## comando a executar
       ports:
-        - "3500:3500" ## redirecionamento de porta quando chegar alguma requisição na porta 3000 chama o container na porta 3000
+        - "3500:3500" ## redirecionamento de porta quando chegar alguma requisição na porta 3500 chama o container na porta 3500
       volumes:
         - .:/usr/app ## monitoro a pasta atual . e envio as alterações para /usr/app
